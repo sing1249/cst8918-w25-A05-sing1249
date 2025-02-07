@@ -87,3 +87,21 @@ resource "azurerm_network_security_group" "nsg" {
     destination_address_prefix = "*"
   }
 }
+
+
+# Defining Virtual Network Interface Card (NIC)
+resource "azurerm_network_interface" "nic" {
+  name                = "${var.labelPrefix}-A05-NIC"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.public_ip.id
+  }
+
+    # Applying the security group to the NIC
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
