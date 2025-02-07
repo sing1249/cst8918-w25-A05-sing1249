@@ -26,8 +26,17 @@ provider "cloudinit" {
 }
 
 
-#Defining resource group
+# Defining resource group
 resource "azurerm_resource_group" "rg" {
   name     = "${var.labelPrefix}-A05-RG"
   location = var.region
+}
+
+
+# Defining Public IP Address
+resource "azurerm_public_ip" "public_ip" {
+  name                = "${var.labelPrefix}-A05-PIP"
+  resource_group_name = azurerm_resource_group.rg.name 
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Dynamic"
 }
