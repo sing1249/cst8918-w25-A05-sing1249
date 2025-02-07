@@ -105,3 +105,16 @@ resource "azurerm_network_interface" "nic" {
     # Applying the security group to the NIC
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
+
+
+# Defining a data resource using the cloudinit_config resource type
+data "cloudinit_config" "webserver" {
+  gzip          = false
+  base64_encode = false
+
+  part {
+    content_type = "text/x-shellscript"
+    filename     = "init.sh"
+    content      = file("${path.module}/init.sh")
+  }
+}
