@@ -145,7 +145,7 @@ resource "azurerm_linux_virtual_machine" "webserver" {
     username   = var.admin_username
     public_key = file("/home/sing1249/.ssh/id_rsa.pub")
   }
-  custom_data = data.cloudinit_config.webserver.rendered
+  custom_data = base64encode(data.cloudinit_config.webserver.rendered)
 }
 
 
