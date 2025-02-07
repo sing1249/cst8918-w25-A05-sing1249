@@ -140,7 +140,7 @@ resource "azurerm_linux_virtual_machine" "webserver" {
   }
   admin_ssh_key {
     username   = var.admin_username
-    public_key = file("${path.module}/id_rsa.pub")
+    public_key = file("~/.ssh/id_rsa.pub")
   }
   custom_data = data.cloudinit_config.webserver.rendered
 }
