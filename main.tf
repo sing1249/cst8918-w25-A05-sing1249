@@ -102,10 +102,10 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id          = azurerm_public_ip.public_ip.id
   }
 
-  # Applying the security group to the NIC
-  network_security_group {
-    id = azurerm_network_security_group.nsg.id
-  }
+# Associate NSG with NIC
+resource "azurerm_network_interface_security_group_association" "nsg_assoc" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
 
